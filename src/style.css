@@ -1,0 +1,242 @@
+:root {
+  --ink: #1c120c;
+  --paper: #f4ead8;
+  --cork: #c4a06a;
+  --walnut: #2a1810;
+  --brass: #b08d57;
+  --blood: #c41e3a;
+  --muted: #8a7358;
+  --frame: #1a0f0a;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--frame); color: var(--paper); }
+body {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(#3a2418, #24150f);
+  border-bottom: 1px solid #5a3b24;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  z-index: 5;
+}
+
+.brand { display: flex; gap: 0.75rem; align-items: center; min-width: 13rem; }
+.brand h1 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+.tag { margin: 0; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.mark {
+  width: 1.35rem; height: 1.35rem; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8c27a, var(--blood) 55%, #6b101c);
+  box-shadow: 0 0 0 2px #7a5a32;
+}
+
+.webs, .view-toggle { display: flex; gap: 0.3rem; }
+.webs { flex: 1; justify-content: center; }
+button {
+  font: 500 0.78rem/1 "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8d9c2;
+  background: #2c1b13;
+  border: 1px solid #6a4a30;
+  padding: 0.45rem 0.75rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+button.on, button[aria-selected="true"] {
+  background: #c9a06a;
+  color: #1c120c;
+  border-color: #e8c99a;
+}
+button:hover { filter: brightness(1.08); }
+
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: #120b08;
+}
+#scene {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#labels {
+  position: absolute;
+  inset: 0;
+}
+.label-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.pin-label {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  color: #1c120c;
+  background: rgba(243, 230, 208, 0.92);
+  border: 1px solid #b89a6e;
+  padding: 1px 5px 2px;
+  transform: translate(-50%, 0);
+  white-space: nowrap;
+  box-shadow: 1px 2px 0 rgba(40,20,8,.22);
+  pointer-events: none;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pin-label .n { font-weight: 600; }
+.pin-label .y {
+  display: none;
+  margin-left: 0.4rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: #6a5340;
+}
+.pin-label.time .y { display: inline; }
+.pin-label.dim { opacity: 0.22; }
+.pin-label.sel { outline: 2px solid var(--blood); }
+.pin-label.kind-affiliation { background: #efe0a8; }
+.pin-label.kind-org, .pin-label.kind-place { background: #e6d3b4; }
+.pin-label.kind-event { background: #d9e2ea; }
+
+.year-tick {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: #d9c4a0;
+  pointer-events: none;
+  text-shadow: 0 1px 2px #000;
+}
+
+.legend, .inspect {
+  position: absolute;
+  top: 1rem;
+  background: rgba(28, 16, 10, 0.88);
+  border: 1px solid #6a4a30;
+  padding: 0.85rem 1rem;
+  backdrop-filter: blur(8px);
+  max-height: calc(100% - 5.5rem);
+  overflow: auto;
+}
+.legend { left: 1rem; width: 12.5rem; }
+.inspect { right: 1rem; width: 22rem; }
+.legend-title, .kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 0.6rem;
+}
+.swatch {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.82rem; margin: 0.28rem 0; cursor: pointer;
+}
+.swatch i {
+  width: 1.1rem; height: 0.28rem; border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35);
+}
+.swatch input { accent-color: var(--brass); }
+.bg-pick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid #6a4a30;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.bg-pick input[type="color"] {
+  width: 2.2rem;
+  height: 1.4rem;
+  padding: 0;
+  border: 1px solid #6a4a30;
+  background: transparent;
+  cursor: pointer;
+}
+
+.inspect h2 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.25rem;
+  margin: 0 0 0.3rem;
+  line-height: 1.2;
+}
+.inspect .dates { font-family: "IBM Plex Mono", monospace; color: var(--brass); margin: 0 0 0.6rem; }
+.inspect .sum { margin: 0 0 0.6rem; color: #f0e4d0; font-size: 0.92rem; }
+.inspect .meta { margin: 0.2rem 0; color: var(--muted); font-size: 0.8rem; }
+.inspect .amp { color: var(--brass); font-weight: 400; }
+.inspect ul { margin: 0.6rem 0 0; padding: 0; list-style: none; }
+.inspect li { font-size: 0.8rem; margin: 0.35rem 0; color: #e8d9c2; }
+.inspect a { color: #e8c27a; }
+.dot {
+  display: inline-block; width: 0.55rem; height: 0.18rem;
+  margin-right: 0.35rem; vertical-align: middle;
+}
+.close {
+  float: right; padding: 0.15rem 0.45rem; font-size: 1rem;
+}
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 3.4rem;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: #d9c4a0;
+  background: rgba(20,10,6,.55);
+  padding: 0.25rem 0.7rem;
+  pointer-events: none;
+  text-align: center;
+  max-width: 90%;
+}
+
+.timebar[hidden] {
+  display: none !important;
+}
+.timebar {
+  position: absolute;
+  left: 14rem;
+  right: 14rem;
+  bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  color: #e8d9c2;
+}
+.timebar input[type="range"] { flex: 1; accent-color: var(--blood); }
+#year-readout { min-width: 3.2rem; color: var(--brass); font-weight: 500; }
+
+@media (max-width: 820px) {
+  .top { flex-wrap: wrap; gap: 0.5rem; }
+  .brand { min-width: 0; }
+  .webs { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+  .legend { display: none; }
+  .inspect { left: 0.5rem; right: 0.5rem; width: auto; bottom: 3.2rem; top: auto; max-height: 40%; }
+  .timebar { left: 0.75rem; right: 0.75rem; }
+  .hint { bottom: 2.8rem; }
+}

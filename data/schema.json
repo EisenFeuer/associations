@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AssociationsWeb",
+  "type": "object",
+  "required": ["id", "title", "nodes", "edges"],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "color_legend": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": {
+            "enum": ["person", "org", "place", "work", "event", "affiliation"]
+          },
+          "name": { "type": "string" },
+          "aka": { "type": "array", "items": { "type": "string" } },
+          "dates": { "type": "string" },
+          "summary": { "type": "string" },
+          "religion": { "type": ["string", "null"] },
+          "politics": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "target", "type", "fact", "sources", "confidence"],
+        "properties": {
+          "id": { "type": "string" },
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "type": {
+            "enum": [
+              "ancestry",
+              "romantic",
+              "religion",
+              "political_ideology",
+              "organization",
+              "documented_communications"
+            ]
+          },
+          "subtype": { "type": "string" },
+          "start": { "type": ["string", "null"] },
+          "end": { "type": ["string", "null"] },
+          "fact": { "type": "string" },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["title", "url"],
+              "properties": {
+                "title": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            }
+          },
+          "confidence": { "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

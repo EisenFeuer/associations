@@ -1,0 +1,19 @@
+{
+  "name": "associations",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5196 --strictPort --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --port 5196 --strictPort --host 127.0.0.1"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true
+  }
+}
